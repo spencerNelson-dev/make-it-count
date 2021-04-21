@@ -6,6 +6,7 @@ $seperateCase = false;
 $countOtherChars = false;
 $characterToExclude = "";
 
+// Handle checkbox inputs and set the proper boolean variables
 if(!empty($_POST["isSeperateCase"]))
 {
     $seperateCase = true;
@@ -22,21 +23,22 @@ if(!empty($_POST["excludeCharacter"]))
 }
 
 //Output
-
 if(validateExcludedCharacter($characterToExclude))
 {
-    $outputArray = generate_results_tables($inputString, $seperateCase, $countOtherChars, $characterToExclude);
+    $outputArray = generate_results_data($inputString, $seperateCase, $countOtherChars, $characterToExclude);
     echo json_encode ($outputArray);
 }
+// if the user tries to pass a string with more than one character
+// we want to return an object with an "error"
+// -TODO- Consider moving this validation to js
 else
 {
     echo json_encode (array("error" => '<h4 style="color: red;"> Only one character can be excluded.</h4>'));
 }
 
 
-// table generation functions
-
-function generate_results_tables($inputString, $seperateCase, $countOtherChars, $characterToExclude)
+// Generate JSON to be passed back.
+function generate_results_data($inputString, $seperateCase, $countOtherChars, $characterToExclude)
 {
     $outputArray = array("dataArrays" => array());
     $htmlTables = "";
@@ -48,10 +50,10 @@ function generate_results_tables($inputString, $seperateCase, $countOtherChars, 
         $upperCase = array_filter($countArray, "isUpperAlphabet", ARRAY_FILTER_USE_KEY);
         $lowerCase = array_filter($countArray, "isLowerAlphabet", ARRAY_FILTER_USE_KEY);
 
-        $htmlTables .= generate_count_results($upperCase);
+        $htmlTables .= generate_count_table($upperCase);
         $outputArray["dataArrays"]["upperCase"] = $upperCase;
 
-        $htmlTables .= generate_count_results($lowerCase);
+        $htmlTables .= generate_count_table($lowerCase);
         $outputArray["dataArrays"]["lowerCase"] = $lowerCase;
 
     }
@@ -62,7 +64,7 @@ function generate_results_tables($inputString, $seperateCase, $countOtherChars, 
 
         $filteredArray = array_filter($countArray, "isAlphabet", ARRAY_FILTER_USE_KEY);
 
-        $htmlTables .= generate_count_results($filteredArray);
+        $htmlTables .= generate_count_table($filteredArray);
         $outputArray["dataArrays"]["total"] = $filteredArray;
     }
 
@@ -70,7 +72,7 @@ function generate_results_tables($inputString, $seperateCase, $countOtherChars, 
     {
         $filteredArray = array_filter($countArray, "isNumberSpaceSpecialChar", ARRAY_FILTER_USE_KEY);
 
-        $htmlTables .= generate_count_results($filteredArray);
+        $htmlTables .= generate_count_table($filteredArray);
         $outputArray["dataArrays"]["other"] = $filteredArray;
     }
 
@@ -79,7 +81,8 @@ function generate_results_tables($inputString, $seperateCase, $countOtherChars, 
     return $outputArray;
 }
 
-function generate_count_results($countArray)
+// This function creates our html tables with the raw counts
+function generate_count_table($countArray)
 {
     $htmlTable = "";
 
@@ -128,7 +131,7 @@ function my_count_chars($inputString, $characterToExclude)
 
         if($currentChar != $characterToExclude)
         {
-            if(array_key_exists($currentChar, $resultArray))
+            if(my_array_key_exists($currentChar, $resultArray))
             {
                 $resultArray[$currentChar] += 1;
             }
@@ -157,6 +160,7 @@ function my_strlen($string)
     return $length;
 }
 
+
 function my_array_key_exists($key, $array)
 {
     $exists = false;
@@ -182,6 +186,7 @@ function validateExcludedCharacter($char)
     return true;
 }
 
+// like strtoupper but excludes a char from being capatalized
 function strtoupper_exclude($string, $charToExclude)
 {
     $length = my_strlen($string);
@@ -199,7 +204,6 @@ function strtoupper_exclude($string, $charToExclude)
 }
 
 // filter functions
-
 function isAlphabet($var)
 {
     if(isLowerAlphabet($var) || isUpperAlphabet($var))

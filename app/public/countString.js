@@ -1,3 +1,4 @@
+// Ajax request and response handling
 $(document).ready(function () {
 
     $("#input-form").submit(function(event) {
@@ -31,11 +32,12 @@ $(document).ready(function () {
         });
 
         ajaxRequest.fail(function(){
-
             $("#result").html('There is an error with the submitted request')
         });
     });
 
+    // Excluded Character checkbox behavior:
+    // if checked show the input box.
     $("#excludeCharacter").change(function() {
         if($(this).is(":checked")){
             $("#characterTextBox")
@@ -46,11 +48,15 @@ $(document).ready(function () {
         }
     })
 
+    // Counts total characters entered into the textarea
     $("#inputString").keyup(function(event){
         $("#count").html("Total Characters: " + $("#inputString").val().length)
     })
 });
 
+// loadCharts forms data from count_string.php
+// into a form that CanvasJs can handle
+// www.CanvasJs.com
 function loadCharts(dataArrays){
 
     var dataPoints = []
