@@ -75,11 +75,14 @@ function loadCharts(dataArrays){
     })
     dataPoints.sort((a,b) => (a.label < b.label) ? 1 : -1)
 
-    console.log(dataPoints);
+    var totalCount = 0
+
+    if(dataPoints.length > 0)
+        totalCount = dataPoints.map(el => el.y).reduce((acc, val) => acc + val);
 
 	var chart = new CanvasJS.Chart("charts", {
 		title:{
-			text: "Total Counted: " + dataPoints.length              
+			text: "Unique Chars: " + dataPoints.length + " Total Counted: " + totalCount              
 		},
         axisX:{
             title: "Character"
