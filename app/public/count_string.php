@@ -239,7 +239,7 @@ function isUpperAlphabet($var)
 function isNumberSpaceSpecialChar($var)
 {
     $var = ord($var);
-    if($var >= 32 && $var <= 64)
+    if($var >= 32 && $var <= 64 || $var >= 123 && $var <= 126)
     {
         return true;
     }

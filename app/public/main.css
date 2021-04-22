@@ -66,5 +66,15 @@ table, tr, td, th {
     border: 1px solid black;
     border-collapse: collapse;
 }
+
+
+/* Media Queries */
+@media (max-width: 500px) {
+    #result{
+        display: block;
+        margin-top: 20px;
+        padding: 0 15% 0 15%;
+    }
+}
   
 
