@@ -43,7 +43,8 @@ The project was made with the following requirements in mind:
   * By default it will count 'A' and 'a' as A unless the box is checked to do otherwise
 * Added option to add Special characters to the count
   * This will add another table with spaces, numbers, punctuation, and other characters (!@#$%) ect.
-  * not all characters are supported in the count
+  * Not all characters are supported in the count
+    * (e.g. any ASCII 0-13 or >126 are not counted)
 * Deployed to the Web
 
 ## Future Additions
@@ -53,3 +54,8 @@ I would like to include the following:
 * Move all form validation to JavaScript, and have the php handle only good data.
   * Better Seperation of Concerns
 
+## Known Issues
+* ~~If the screen goes smaller than 460px, the tables get cut off~~
+  * ~~Fix would include media queries in css~~
+* Some other characters also get counted as spaces
+* Will only count ASCII 32-126 (not really an issue but still a limitation)
