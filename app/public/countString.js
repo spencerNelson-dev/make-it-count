@@ -82,11 +82,10 @@ function loadCharts(dataArrays){
 			text: "Total Counted: " + dataPoints.length              
 		},
         axisX:{
-            title: "Number of Instances",
-            valueFormatString: ""
+            title: "Character"
         },
         axisY:{
-            title: "Character"
+            title: "Number of Instances"
         },
 		data: [              
 		{

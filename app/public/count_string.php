@@ -84,6 +84,8 @@ function generate_results_data($inputString, $seperateCase, $countOtherChars, $c
 // This function creates our html tables with the raw counts
 function generate_count_table($countArray)
 {
+    ksort($countArray);
+
     $htmlTable = "";
 
     if(count($countArray) > 0){
@@ -161,13 +163,11 @@ function my_strlen($string)
 }
 
 
-function my_array_key_exists($key, $array)
-{
-    $exists = false;
-    
-    for($i=0; $i<my_strlen($array); $i++)
+function my_array_key_exists($keyToMatch, $array)
+{    
+    foreach($array as $key => $value )
     {
-        if($key == $array[$i])
+        if($key == $keyToMatch)
         {
             return true;
         }
