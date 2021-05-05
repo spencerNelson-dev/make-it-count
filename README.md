@@ -1,8 +1,6 @@
 # Make it Count!
 #### For all your string counting needs!
 
-[Link to hosted app](https://sn-count.herokuapp.com/)
-
 ## For Local Depoloyment
 I used Docker to set up my local environment.
 Included in the repository is the docker-compose.yml file which creates two images:
